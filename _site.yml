@@ -7,16 +7,6 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "Team"
-      href: people.html
-    - text: "Publications"
-      href: publications.html
-    - text: "Photos"
-      href: photo.html
-    - text: "Join us"
-      href: opportunities.html
-    - text: "Data"
-      href: data.html
       
 output:
   html_document:
@@ -25,3 +15,4 @@ output:
     include:
 #      in_header: header.html
       after_body: footer.html
+
