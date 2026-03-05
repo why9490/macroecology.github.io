@@ -1,1 +1,416 @@
+<!DOCTYPE html>
 
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>macroecology</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><p style="color:darkblue;font-weight:bold;font-size:30px">Macroecology Group</p></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="people.html">Team</a>
+</li>
+<li>
+  <a href="publications.html">Publications</a>
+</li>
+<li>
+  <a href="photo.html">Photos</a>
+</li>
+<li>
+  <a href="opportunities.html">Join us</a>
+</li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">macroecology</h1>
+
+</div>
+
+
+<div class="row">
+<div id="si-chong-chen-陈思翀" class="section level3 col-md-6">
+<h3><strong>Si-Chong Chen (陈思翀)</strong><br></h3>
+<div id="professor-in-ecology" class="section level4">
+<h4><strong>Professor in Ecology</strong><br></h4>
+<p><a href="http://www.wbg.cas.cn/">Wuhan Botanical Garden, Chinese
+Academy of Sciences</a>, Wuhan, P.R. China<br> <a
+href="http://www.kew.org/">Royal Botanic Gardens, Kew</a>, Surrey,
+UK</p>
+<p><br></p>
+</div>
+<div id="contact-me" class="section level4">
+<h4>Contact me:</h4>
+<p>No. 201, Jiufeng 1st Road, East Lake High-tech Development Zone,
+Wuhan, P.R. China<br> Email: <a
+href="mailto:chensichong0528@gmail.com">chensichong0528[a]gmail.com</a></p>
+</div>
+</div>
+<div class="col-md-6">
+<p><br> <a href="XXX.JPG" id="id" class="class" width="100%"
+height="100%"><img src="Pictures/XXX.JPG" /></a></p>
+</div>
+</div>
+<hr>
+<div id="professional-experience" class="section level4">
+<h4>Professional Experience</h4>
+<ul>
+<li><p>2021 –         : Professor (Overseas High-level Talents
+Program)<br> <a href="http://www.wbg.cas.cn/">Wuhan Botanical Garden,
+Chinese Academy of Sciences</a></p></li>
+<li><p>XXX – XXX: XXX <br> Where XXX</p></li>
+<li><p>XXX – XXX: XXX <br> Where XXX</p></li>
+</ul>
+<hr>
+</div>
+<div id="research-interests" class="section level4">
+<h4>Research interests</h4>
+<p>I work on the macroecological patterns in seed dispersal, seed
+predation, seed storage behaviours and relevant disciplines. My research
+aims to contribute to our understanding of seed ecology in three key
+ways:<br></p>
+<ul>
+<li><p>by narrowing the gaps between data, intuitive ideas and
+theories;</p></li>
+<li><p>by enhancing the integration of replicated studies at a
+macro-ecological scale;</p></li>
+<li><p>by extending understanding from a local scale and a small number
+of species to a global scale spanning many biomes and taxonomic
+groups.</p></li>
+</ul>
+<hr>
+</div>
+<div id="professional-services" class="section level4">
+<h4>Professional Services</h4>
+<p><strong>Editorial Board</strong><br> <a
+href="https://besjournals.onlinelibrary.wiley.com/hub/journal/2041210X/editorial-board/associate-editors#S">Methods
+in Ecology and Evolution</a> Associate Editor (2023-)<br> <a
+href="http://www.oikosjournal.org/about-journal/editorial-board">Oikos</a>
+Subject Editor (2020-)<br> <a
+href="https://onlinelibrary.wiley.com/page/journal/17494877/homepage/editorialboard.html">Integrative
+Zoology</a> Associate Editor (2022-)<br> <a
+href="https://www.biodiversity-science.net/CN/column/column48.shtml">Biodiversity
+Science 生物多样性</a> Editorial Board Member (2024-)<br> <a
+href="https://www.plant-ecology.com/CN/column/column58.shtml">Chinese
+Journal of Plant Ecology 植物生态学报</a> Editorial Board Member
+(2024-)<br> <a href="https://plantscience.cn/bianweihui">Plant Science
+Journal 植物科学学报</a> Editorial Board Member (2022-)<br></p>
+<hr>
+</div>
+<div id="research-interests-1" class="section level4">
+<h4>Research Interests</h4>
+<p><strong>Macroecology, Biogeography</strong></p>
+<ul>
+<li><p style="color:darkblue">
+<strong>Prospective students and postdocs are encouraged to read [our
+publications] and <a href="mailto:chensichong0528@gmail.com">contact
+me</a> or the [lab members] before applying officially.</strong>
+</p></li>
+</ul>
+</div>
+
+<hr>
+
+<p style="text-align:center;font-size:14px">
+
+Macroecology Group<br>
+Wuhan Botanical Garden, Chinese Academy of Sciences<br>
+No. 201 Jiufeng 1st Road, East Lake High-tech Development Zone, Wuhan, China
+
+</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
